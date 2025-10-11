@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String           @id @default(cuid())
+  email         String           @unique
+  passwordHash  String
+  displayName   String
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  profile       PlayerProfile?
+  quests        Quest[]
+  transactions  Transaction[]
+  inventory     InventoryItem[]
+  skills        PlayerSkill[]
+  achievements  AchievementProgress[]
+}
+
+model PlayerProfile {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  level                Int      @default(1)
+  xp                   Int      @default(0)
+  strength             Int      @default(5)
+  agility              Int      @default(5)
+  intelligence         Int      @default(5)
+  vitality             Int      @default(5)
+  sense                Int      @default(5)
+  unallocatedStatPoints Int     @default(0)
+  rank                 Rank     @default(E)
+  mana                 Int      @default(100)
+  jobClass             String?
+  streakCount          Int      @default(0)
+  longestStreak        Int      @default(0)
+  lastDailyReset       DateTime?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  user                 User     @relation(fields: [userId], references: [id])
+}
+
+enum Rank {
+  E
+  D
+  C
+  B
+  A
+  S
+  NATIONAL
+}
+
+model Quest {
+  id              String           @id @default(cuid())
+  userId          String
+  type            QuestType
+  title           String
+  description     String
+  difficulty      QuestDifficulty
+  status          QuestStatus     @default(PENDING)
+  xpReward        Int
+  manaReward      Int              @default(0)
+  statReward      Json?
+  lootTable       Json?
+  penalty         Json?
+  startedAt       DateTime?
+  expiresAt       DateTime?
+  completedAt     DateTime?
+  failedAt        DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  user            User             @relation(fields: [userId], references: [id])
+  transactions    Transaction[]
+}
+
+enum QuestType {
+  DAILY
+  PENALTY
+  EMERGENCY
+  STORY
+}
+
+enum QuestStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  FAILED
+}
+
+enum QuestDifficulty {
+  E
+  D
+  C
+  B
+  A
+  S
+}
+
+model InventoryItem {
+  id          String     @id @default(cuid())
+  userId      String
+  name        String
+  description String
+  category    ItemCategory
+  rarity      ItemRarity
+  quantity    Int        @default(1)
+  isEquipped  Boolean    @default(false)
+  statBonuses Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  user        User       @relation(fields: [userId], references: [id])
+}
+
+enum ItemCategory {
+  WEAPON
+  ARMOR
+  POTION
+  CONSUMABLE
+  MISC
+}
+
+enum ItemRarity {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+model Transaction {
+  id          String     @id @default(cuid())
+  userId      String
+  questId     String?
+  type        TransactionType
+  amount      Int
+  currency    Currency    @default(GOLD)
+  metadata    Json?
+  createdAt   DateTime    @default(now())
+  user        User        @relation(fields: [userId], references: [id])
+  quest       Quest?      @relation(fields: [questId], references: [id])
+}
+
+enum TransactionType {
+  QUEST_REWARD
+  PURCHASE
+  PENALTY
+  BONUS
+}
+
+enum Currency {
+  GOLD
+  DIAMOND
+}
+
+model Skill {
+  id          String     @id @default(cuid())
+  name        String
+  description String
+  tier        Int        @default(1)
+  type        SkillType
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  players     PlayerSkill[]
+}
+
+enum SkillType {
+  ACTIVE
+  PASSIVE
+}
+
+model PlayerSkill {
+  id         String   @id @default(cuid())
+  userId     String
+  skillId    String
+  isUnlocked Boolean  @default(false)
+  level      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+  skill      Skill    @relation(fields: [skillId], references: [id])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  title       String
+  description String
+  threshold   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  progress    AchievementProgress[]
+}
+
+model AchievementProgress {
+  id            String       @id @default(cuid())
+  userId        String
+  achievementId String
+  currentValue  Int          @default(0)
+  achievedAt    DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  user          User         @relation(fields: [userId], references: [id])
+  achievement   Achievement  @relation(fields: [achievementId], references: [id])
+}
