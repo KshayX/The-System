@@ -1,0 +1,28 @@
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #a5b4fc;
+}
+
+.progress-track {
+  position: relative;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 14px;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #22d3ee, #6366f1, #a855f7);
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+}

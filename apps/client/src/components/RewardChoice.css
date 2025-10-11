@@ -1,0 +1,33 @@
+.reward-choice {
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(236, 72, 153, 0.1);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  width: 100%;
+}
+
+.reward-choice:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 114, 182, 0.6);
+  box-shadow: 0 14px 24px rgba(236, 72, 153, 0.3);
+}
+
+.reward-choice h4 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.reward-choice p {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.85);
+  font-size: 0.85rem;
+}

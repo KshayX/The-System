@@ -1,0 +1,38 @@
+:root {
+  font-family: 'Montserrat', sans-serif;
+  color-scheme: dark;
+  background-color: #080808;
+  color: #f4f4f5;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #05060b, #131626);
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+input, button {
+  background: transparent;
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}

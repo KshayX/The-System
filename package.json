@@ -1,0 +1,21 @@
+{
+  "name": "the-system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Real Life Solo Leveling System - full-stack application",
+  "scripts": {
+    "dev": "concurrently \"npm run -w apps/server dev\" \"npm run -w apps/client dev\"",
+    "build": "npm run -w apps/server build && npm run -w apps/client build",
+    "start": "npm run -w apps/server start",
+    "prisma:migrate": "npm run -w apps/server prisma:migrate",
+    "prisma:generate": "npm run -w apps/server prisma:generate",
+    "lint": "npm run -w apps/client lint"
+  },
+  "workspaces": [
+    "apps/server",
+    "apps/client"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

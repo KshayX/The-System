@@ -1,0 +1,46 @@
+.skill-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.skill-tier h4 {
+  margin: 0 0 8px 0;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #facc15;
+}
+
+.skill-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.skill-node {
+  border: 1px dashed rgba(253, 224, 71, 0.35);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(202, 138, 4, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 120px;
+}
+
+.skill-node.unlocked {
+  border-style: solid;
+  border-color: rgba(250, 204, 21, 0.8);
+  box-shadow: 0 12px 24px rgba(250, 204, 21, 0.25);
+}
+
+.skill-name {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.skill-node p {
+  margin: 0;
+  color: rgba(248, 250, 252, 0.8);
+  font-size: 0.85rem;
+}
